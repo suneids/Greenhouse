@@ -1,0 +1,2 @@
+../Inc/myhal/src/utilities.c:4:6:HAL_assert	16	static
+../Inc/myhal/src/utilities.c:10:6:HAL_assertFailed	16	static,ignoring_inline_asm

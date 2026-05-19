@@ -1,0 +1,17 @@
+../Src/activities.c:4:9:WaitFlagSet	24	static
+../Src/activities.c:13:9:SHT40_Read	16	static
+../Src/activities.c:30:6:STANDBY_Enter	8	static,ignoring_inline_asm
+../Src/activities.c:46:9:RTC_Init_LSI_Once	8	static
+../Src/activities.c:93:9:RTC_WakeupSeconds	16	static
+../Src/activities.c:131:6:PUMP_Off	8	static
+../Src/activities.c:137:6:PUMP_Run	16	static
+../Src/activities.c:148:6:COOLER_Off	8	static
+../Src/activities.c:154:6:COOLER_Run	16	static
+../Src/activities.c:164:6:GREENHOUSE_Init	40	static
+../Src/activities.c:194:6:GREENHOUSE_On	8	static
+../Src/activities.c:199:6:GREENHOUSE_Off	8	static
+../Src/activities.c:207:6:GREENHOUSE_ReadState	8	static
+../Src/activities.c:215:6:GREENHOUSE_Watering	32	static
+../Src/activities.c:239:6:GREENHOUSE_Cooling	32	static
+../Src/activities.c:271:6:GREENHOUSE_PeripheryOn	8	static
+../Src/activities.c:276:6:GREENHOUSE_PeripheryOff	8	static
