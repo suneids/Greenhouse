@@ -21,5 +21,7 @@ void GREENHOUSE_Cooling(void);
 void GREENHOUSE_PeripheryOn(void);
 void GREENHOUSE_PeripheryOff(void);
 
-
+void GREENHOUSE_Task(void);
+void Radio_HandlePacket(const RadioPacket_t *pkt);
+void Radio_Task(USART_TypeDef *USARTx);
 #endif /* ACTIVITIES_H_ */

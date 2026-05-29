@@ -174,7 +174,6 @@ void GREENHOUSE_Init(){
 	adc_pins[0] = soil0;
 	adc_pins[1] = soil1;
 	adc_pins[2] = soil2;
-	adc_pins[3] = pump_f;
 
 	I2C_Init(I2C1, SDA, SCL);
 	ADC_InitMulti(adc_pins, ADC_COUNT, need_ADC_DMA);
@@ -187,7 +186,11 @@ void GREENHOUSE_Init(){
 	TIM3->SMCR = 0;
 	TIM3->CR1 |= TIM_CR1_CEN;
 
-
+	USART_Init(USART1, 9600, 0, 1);
+	GPIO_Pin_t tx = {.port = GPIOA, .number = 9, .moder = GPIO_MODE_AF, .otype = GPIO_OTYPE_OD,
+			         .pull = GPIO_NOPULL, .speed = GPIO_SPEED_LOW, .af = 1};
+	GPIO_PinMode(tx);
+	Radio_Init();
 }
 
 
@@ -214,8 +217,7 @@ void GREENHOUSE_ReadState(){
 
 void GREENHOUSE_Watering(void)
 {
-    const uint32_t h_threshold      = 1500u,
-    		       watering_time_ms = 2000u,
+    const uint32_t watering_time_ms = 20000u,
 				   soak_wait_ms     = 20000u;
     const uint8_t  max_attempts     = 3u;
 
@@ -223,7 +225,7 @@ void GREENHOUSE_Watering(void)
 
         GREENHOUSE_ReadState();
 
-        if(avg_soil_h < h_threshold) break;
+        if(avg_soil_h < soil_dry_threshold) break;
 
         PUMP_Run(PWM_100_PERCENT);
         SysTick_Delay(watering_time_ms);
@@ -248,12 +250,19 @@ void GREENHOUSE_Cooling(void)
 
     GREENHOUSE_ReadState();
 
-    if((temp <= temp_threshold) && (rh <= rh_threshold)) {
-    	 COOLER_Off();
-        return;
-    }
 
-    COOLER_Run(PWM_100_PERCENT);
+    if (temp < 25) {
+    	if(rh > 75)      COOLER_Run(PWM_100_PERCENT);
+		else if(rh < 65) COOLER_Off();
+    }
+    else if (temp < 28) {
+    	if(rh > 70)      COOLER_Run(PWM_100_PERCENT);
+		else if(rh < 60) COOLER_Off();
+    }
+    else {
+    	if(rh > 65)      COOLER_Run(PWM_100_PERCENT);
+    	else if(rh < 55) COOLER_Off();
+    }
 
     while((millis() - start_ms) < max_cooling_ms) {
         SysTick_Delay(check_period_ms);
@@ -276,3 +285,92 @@ void GREENHOUSE_PeripheryOn(void){
 void GREENHOUSE_PeripheryOff(void){
 
 }
+
+
+void GREENHOUSE_Task(void)
+{
+   if(pump_off_time_ms != 0 && millis() >= pump_off_time_ms) {
+	   PUMP_Off();
+	   pump_off_time_ms = 0;
+   }
+
+   if(autowatering)
+	   if(avg_soil_h > soil_dry_threshold && water_available)
+		   GREENHOUSE_Watering();
+
+
+   if(autocooling) GREENHOUSE_Cooling();
+}
+
+
+void Radio_HandlePacket(const RadioPacket_t *pkt){
+	if(pkt->id != MY_ID && pkt->id != DEV_BROADCAST) {
+		return;
+	}
+
+	switch(pkt->cmd) {
+		case CMD_STATUS_REQUEST:
+			if(pkt->id == DEV_GREENHOUSE){
+				GREENHOUSE_SendStatus();
+			}
+			break;
+		case CMD_GREENHOUSE_FAN_SET:
+			if(pkt->len >= 1) {
+				if(pkt->data[0]) {
+					COOLER_Run(PWM_100_PERCENT);
+				} else {
+					COOLER_Off();
+				}
+			}
+			break;
+
+		case CMD_GREENHOUSE_PUMP_SET:
+			if(pkt->len >= 1) {
+				uint8_t seconds = pkt->data[0];
+
+				if(seconds == 0) {
+					PUMP_Off();
+					pump_off_time_ms = 0;
+				} else {
+					PUMP_Run(PWM_100_PERCENT);
+					pump_off_time_ms = millis() + ((uint32_t)seconds * 1000u);
+				}
+			}
+			break;
+
+		case CMD_GREENHOUSE_AUTOWATER_SET:
+			if(pkt->len >= 1) {
+				autowatering = pkt->data[0] ? 1 : 0;
+			}
+			break;
+
+		case CMD_GREENHOUSE_AUTOVENT_SET:
+			if(pkt->len >= 1) {
+				autocooling = pkt->data[0] ? 1 : 0;
+			}
+			break;
+
+		case CMD_GREENHOUSE_SOIL_LIMIT_SET:
+			if(pkt->len >= 2)  soil_dry_threshold = pkt->data[0] |((uint16_t)pkt->data[1] << 8);
+
+			break;
+
+		default:
+			break;
+	}
+}
+
+
+void Radio_Task(USART_TypeDef *USARTx)
+{
+    RadioPacket_t pkt;
+
+    while(USART_Available(USARTx) > 0) {
+        uint8_t byte = (uint8_t)USART_ReadByte(USARTx);
+
+        if(RadioParser_FeedByte(&radio_parser, byte, &pkt)) {
+            Radio_HandlePacket(&pkt);
+        }
+    }
+}
+

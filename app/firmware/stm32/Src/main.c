@@ -12,17 +12,19 @@ int main(void)
 	}
 
 	GREENHOUSE_ReadState();
-	GREENHOUSE_Watering();
-	GREENHOUSE_Cooling();
+//	GREENHOUSE_Watering();
+//	GREENHOUSE_Cooling();
 
-	GREENHOUSE_Off();
-
-	if(RTC_WakeupSeconds(60)) {
-		STANDBY_Enter();
-	}
+//	GREENHOUSE_Off();
+//
+//	if(RTC_WakeupSeconds(60)) {
+//		STANDBY_Enter();
+//	}
 
 	while(1){
-//		GREENHOUSE_Watering();
-//		GREENHOUSE_Cooling();// ошибка RTC wakeup, не спим
+
+		GREENHOUSE_ReadState();
+		GREENHOUSE_Task();
+		Radio_Task(USART1);
 	}
 }

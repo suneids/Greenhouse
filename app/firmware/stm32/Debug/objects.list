@@ -26,6 +26,7 @@
 "./Src/activities.o"
 "./Src/config.o"
 "./Src/main.o"
+"./Src/protocol.o"
 "./Src/syscalls.o"
 "./Src/sysmem.o"
 "./Startup/startup_stm32g0b1cbtx.o"

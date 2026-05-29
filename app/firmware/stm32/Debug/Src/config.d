@@ -11,7 +11,8 @@ Src/config.o: ../Src/config.c ../Src/config.h \
  ../Src/../inc/myhal/inc/i2c.h ../Src/../inc/myhal/inc/gpio.h \
  ../Src/../inc/myhal/inc/tim.h ../Src/../inc/myhal/inc/pwm.h \
  ../Src/../inc/myhal/inc/tim.h ../Src/../inc/myhal/inc/adc.h \
- ../Src/../inc/myhal/inc/dma.h
+ ../Src/../inc/myhal/inc/dma.h ../Src/../inc/myhal/inc/usart.h \
+ ../Src/protocol.h ../Src/../Inc/myhal/inc/usart.h
 ../Src/config.h:
 ../Src/../inc/myhal/inc/gpio.h:
 ../Src/../inc/myhal/inc/mcu_config.h:
@@ -30,3 +31,6 @@ Src/config.o: ../Src/config.c ../Src/config.h \
 ../Src/../inc/myhal/inc/tim.h:
 ../Src/../inc/myhal/inc/adc.h:
 ../Src/../inc/myhal/inc/dma.h:
+../Src/../inc/myhal/inc/usart.h:
+../Src/protocol.h:
+../Src/../Inc/myhal/inc/usart.h:
