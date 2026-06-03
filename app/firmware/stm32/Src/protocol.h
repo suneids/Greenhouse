@@ -3,7 +3,7 @@
 
 #include <stdint.h>
 #include <stdbool.h>
-#include "../Inc/myhal/inc/usart.h"
+#include "../Inc/HAL_STM32F103C6T6/inc/usart.h"
 #define RADIO_SOF1       0xAA
 #define RADIO_SOF2       0x55
 

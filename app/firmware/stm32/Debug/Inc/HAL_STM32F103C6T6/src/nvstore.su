@@ -1,0 +1,10 @@
+../Inc/HAL_STM32F103C6T6/src/nvstore.c:22:17:align2	16	static
+../Inc/HAL_STM32F103C6T6/src/nvstore.c:25:17:otherPage	24	static
+../Inc/HAL_STM32F103C6T6/src/nvstore.c:31:17:crc32_sw	40	static
+../Inc/HAL_STM32F103C6T6/src/nvstore.c:45:20:scanPage	360	static
+../Inc/HAL_STM32F103C6T6/src/nvstore.c:107:20:findEmptySlot	40	static
+../Inc/HAL_STM32F103C6T6/src/nvstore.c:121:20:ProgramBytesAsHalfwords	32	static
+../Inc/HAL_STM32F103C6T6/src/nvstore.c:132:13:NV_Init	56	static
+../Inc/HAL_STM32F103C6T6/src/nvstore.c:175:13:NV_Load	48	static
+../Inc/HAL_STM32F103C6T6/src/nvstore.c:196:13:NV_Save	88	static
+../Inc/HAL_STM32F103C6T6/src/nvstore.c:271:10:NV_LastSeq	16	static

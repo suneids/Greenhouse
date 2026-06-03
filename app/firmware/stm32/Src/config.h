@@ -1,12 +1,12 @@
 #ifndef CONFIG_H
 #define CONFIG_H
-#include "../inc/myhal/inc/gpio.h"
-#include "../inc/myhal/inc/i2c.h"
-#include "../inc/myhal/inc/tim.h"
-#include "../inc/myhal/inc/pwm.h"
-#include "../inc/myhal/inc/adc.h"
-#include "../inc/myhal/inc/dma.h"
-#include "../inc/myhal/inc/usart.h"
+#include "../inc/HAL_STM32F103C6T6/inc/gpio.h"
+#include "../inc/HAL_STM32F103C6T6/inc/i2c.h"
+#include "../inc/HAL_STM32F103C6T6/inc/tim.h"
+#include "../inc/HAL_STM32F103C6T6/inc/pwm.h"
+#include "../inc/HAL_STM32F103C6T6/inc/adc.h"
+#include "../inc/HAL_STM32F103C6T6/inc/dma.h"
+#include "../inc/HAL_STM32F103C6T6/inc/usart.h"
 #include "protocol.h"
 
 #define PWR_CR1_LPMS_STANDBY (0x3u << PWR_CR1_LPMS_Pos)

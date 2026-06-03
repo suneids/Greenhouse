@@ -1,3 +1,3 @@
 [submodule "app/firmware/stm32/Inc/HAL_STM32F103C6T6"]
 	path = app/firmware/stm32/Inc/HAL_STM32F103C6T6
-	url = https://github.com/suneids/HAL_STM32F103C6T6
+	url = git@github.com:suneids/HAL_STM32F103C6T6.git

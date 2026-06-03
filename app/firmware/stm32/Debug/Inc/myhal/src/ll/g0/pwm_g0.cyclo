@@ -1,4 +1,0 @@
-../Inc/myhal/src/ll/g0/pwm_g0.c:36:13:PWM_TimerClockEnable	5
-../Inc/myhal/src/ll/g0/pwm_g0.c:46:6:PWM_Init	6
-../Inc/myhal/src/ll/g0/pwm_g0.c:81:6:PWM_Write	5
-../Inc/myhal/src/ll/g0/pwm_g0.c:95:16:TIM_GetChannel	4
