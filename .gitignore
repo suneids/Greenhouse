@@ -1,0 +1,45 @@
+# STM32CubeIDE / Eclipse
+Debug/
+Release/
+*.launch
+.settings/
+.metadata/
+
+# Build artifacts
+build/
+build-*/
+*.o
+*.obj
+*.elf
+*.bin
+*.hex
+*.map
+*.list
+*.d
+
+# Qt
+*.user
+*.user.*
+Makefile
+.qmake.stash
+moc_*
+ui_*
+qrc_*
+
+# C/C++
+*.a
+*.so
+*.exe
+
+# OS / editor
+.DS_Store
+Thumbs.db
+.vscode/
+
+# Qt Creator / clangd cache
+.qtc_clangd/
+
+# Altium generated files
+History/
+Project Logs for */
+__Previews/
